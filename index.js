@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const genAI = require('@google/genai');
 const app = express()
 const qs = require('qs')
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const port = 4000
 const dotenv = require('dotenv').config();
 const apiKey = process.env.API_KEY
@@ -14,7 +17,6 @@ const {
     HarmCategory,
     Type,
 } = require('@google/genai');
-const { get } = require('http');
 
 const config = {
     safetySettings: [
@@ -69,6 +71,14 @@ const config = {
             },
         },
     },
+};
+
+const privateKey = fs.readFileSync(path.join(__dirname, 'api.cert.key'));
+const certificate = fs.readFileSync(path.join(__dirname, 'api.cert.pem'));
+
+const credentials = {
+    key: privateKey,
+    cert: certificate
 };
 
 // const contents = [
@@ -148,6 +158,12 @@ app.get('/generate', async (req, res) => {
     }
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(port, () => {
+    console.log(`HTTPS server listening on port ${port}`);
+});
+
+// app.listen(port, () => {
+//     console.log(`Example app listening on port ${port}`)
+// })

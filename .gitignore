@@ -1,2 +1,4 @@
 .env
 node_modules
+api.cert.key
+api.cert.pem

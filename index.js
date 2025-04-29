@@ -5,8 +5,7 @@ const app = express()
 const qs = require('qs')
 const port = 4000
 const dotenv = require('dotenv').config();
-// const apiKey = 'AIzaSyDUFsXsBY51tkbhz5-BcIubxxRNR_RZEbA' // remove this key before pushing to GitHub
-const apiKey = process.env.API_KEY // remove this key before pushing to GitHub
+const apiKey = process.env.API_KEY
 const ai = new genAI.GoogleGenAI({ apiKey });
 const cors = require('cors')
 

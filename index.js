@@ -101,7 +101,7 @@ app.set('query parser', (str) => qs.parse(str, { comma: true }));
 
 let genCount = 0;
 const genLimit = 30;
-const genLastCountDate = new Date();
+let genLastCountDate = new Date();
 
 const resetGenCount = () => {
     const now = new Date();
